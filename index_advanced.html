@@ -1,0 +1,1378 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ryan - 个人介绍 | 高级版</title>
+    
+    <!-- 
+    ============================================
+    🎓 高级技巧 #1: 使用 Google Fonts 
+    ============================================
+    使用独特的字体可以让页面更有个性
+    - Playfair Display: 优雅的衬线字体，用于标题
+    - Space Grotesk: 现代感的无衬线字体，用于正文
+    -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Playfair+Display:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <style>
+        /* 
+        ============================================
+        🎓 高级技巧 #2: CSS 自定义属性（变量）
+        ============================================
+        把颜色、字体等定义为变量，方便统一管理和修改
+        想换主题色？只需改这里的变量值！
+        */
+        :root {
+            /* 主色调 - 深蓝到青色的渐变 */
+            --primary-dark: #0f172a;
+            --primary: #1e293b;
+            --primary-light: #334155;
+            
+            /* 强调色 - 金色/琥珀色系，给页面增添高级感 */
+            --accent: #f59e0b;
+            --accent-light: #fbbf24;
+            --accent-glow: rgba(245, 158, 11, 0.3);
+            
+            /* 文字颜色 */
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            
+            /* 字体 */
+            --font-display: 'Playfair Display', serif;
+            --font-body: 'Noto Sans SC', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+            
+            /* 间距系统 - 使用一致的间距让页面更整齐 */
+            --space-xs: 0.5rem;
+            --space-sm: 1rem;
+            --space-md: 1.5rem;
+            --space-lg: 2rem;
+            --space-xl: 3rem;
+            --space-2xl: 5rem;
+            
+            /* 圆角 */
+            --radius-sm: 8px;
+            --radius-md: 16px;
+            --radius-lg: 24px;
+            --radius-full: 9999px;
+            
+            /* 动画时间 */
+            --duration-fast: 0.2s;
+            --duration-normal: 0.4s;
+            --duration-slow: 0.8s;
+        }
+
+        /* 
+        ============================================
+        🎓 高级技巧 #3: CSS Reset + 基础设置
+        ============================================
+        */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* 平滑滚动 */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--primary-dark);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* 
+        ============================================
+        🎓 高级技巧 #4: 动态背景效果
+        ============================================
+        使用多层背景 + 伪元素创建深度感
+        */
+        .background-effects {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* 渐变光晕效果 */
+        .gradient-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.5;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        .orb-1 {
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, var(--accent) 0%, transparent 70%);
+            top: -200px;
+            right: -100px;
+            animation-delay: 0s;
+        }
+
+        .orb-2 {
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, #3b82f6 0%, transparent 70%);
+            bottom: -100px;
+            left: -100px;
+            animation-delay: -10s;
+        }
+
+        .orb-3 {
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, #8b5cf6 0%, transparent 70%);
+            top: 50%;
+            left: 30%;
+            animation-delay: -5s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(50px, -30px) scale(1.1); }
+            50% { transform: translate(-30px, 50px) scale(0.9); }
+            75% { transform: translate(-50px, -20px) scale(1.05); }
+        }
+
+        /* 
+        ============================================
+        🎓 高级技巧 #5: 噪点纹理覆盖层
+        ============================================
+        给页面添加微妙的纹理，增加质感
+        使用 SVG filter 创建噪点效果
+        */
+        .noise-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.03;
+            pointer-events: none;
+            z-index: 1;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        /* 
+        ============================================
+        🎓 高级技巧 #6: 网格线背景
+        ============================================
+        创建科技感的网格背景
+        */
+        .grid-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-size: 60px 60px;
+            z-index: 0;
+        }
+
+        /* 
+        ============================================
+        🎓 高级技巧 #7: 主内容容器
+        ============================================
+        */
+        .main-container {
+            position: relative;
+            z-index: 2;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: var(--space-xl) var(--space-md);
+        }
+
+        /* 
+        ============================================
+        🎓 高级技巧 #8: 入场动画系统
+        ============================================
+        使用 CSS 动画 + animation-delay 创建错落有致的入场效果
+        */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .animate-in {
+            animation: fadeInUp var(--duration-slow) ease-out forwards;
+            opacity: 0;
+        }
+
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+        .delay-4 { animation-delay: 0.4s; }
+        .delay-5 { animation-delay: 0.5s; }
+        .delay-6 { animation-delay: 0.6s; }
+
+        /* 
+        ============================================
+        🎓 高级技巧 #9: Hero 区域设计
+        ============================================
+        */
+        .hero {
+            text-align: center;
+            padding: var(--space-2xl) 0;
+            position: relative;
+        }
+
+        /* 头像容器 - 带光环效果 */
+        .avatar-container {
+            position: relative;
+            display: inline-block;
+            margin-bottom: var(--space-lg);
+        }
+
+        .avatar {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-light), var(--primary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 70px;
+            position: relative;
+            z-index: 2;
+            border: 3px solid var(--accent);
+            box-shadow: 
+                0 0 40px var(--accent-glow),
+                inset 0 0 30px rgba(0,0,0,0.3);
+        }
+
+        /* 头像光环动画 */
+        .avatar-ring {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 180px;
+            height: 180px;
+            border: 2px solid var(--accent);
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: pulse-ring 2s ease-out infinite;
+        }
+
+        .avatar-ring:nth-child(2) {
+            animation-delay: 0.5s;
+        }
+
+        @keyframes pulse-ring {
+            0% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 0.3;
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(1.4);
+                opacity: 0;
+            }
+        }
+
+        /* 名字标题 */
+        .hero-title {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 8vw, 4rem); /* 响应式字体大小 */
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: var(--space-xs);
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-light) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* 打字机光标 */
+        .cursor {
+            display: inline-block;
+            width: 3px;
+            height: 1em;
+            background: var(--accent);
+            margin-left: 4px;
+            animation: blink 1s step-end infinite;
+            vertical-align: text-bottom;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        /* 副标题 */
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: var(--space-md);
+        }
+
+        /* 状态标签 */
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-xs);
+            padding: var(--space-xs) var(--space-sm);
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            border-radius: var(--radius-full);
+            font-size: 0.875rem;
+            color: #22c55e;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: #22c55e;
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* 
+        ============================================
+        🎓 高级技巧 #10: 毛玻璃卡片效果
+        ============================================
+        */
+        .glass-card {
+            background: rgba(30, 41, 59, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-lg);
+            padding: var(--space-lg);
+            margin-bottom: var(--space-lg);
+            transition: all var(--duration-normal) ease;
+        }
+
+        .glass-card:hover {
+            border-color: rgba(245, 158, 11, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            transform: translateY(-4px);
+        }
+
+        /* 卡片标题 */
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            margin-bottom: var(--space-md);
+        }
+
+        .card-icon {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--accent), var(--accent-light));
+            border-radius: var(--radius-sm);
+            font-size: 1.2rem;
+        }
+
+        .card-title {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        /* 
+        ============================================
+        🎓 高级技巧 #11: 技能进度条
+        ============================================
+        */
+        .skills-grid {
+            display: grid;
+            gap: var(--space-md);
+        }
+
+        .skill-item {
+            position: relative;
+        }
+
+        .skill-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: var(--space-xs);
+        }
+
+        .skill-name {
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .skill-level {
+            font-family: var(--font-mono);
+            font-size: 0.875rem;
+            color: var(--accent);
+        }
+
+        .skill-bar {
+            height: 8px;
+            background: var(--primary-light);
+            border-radius: var(--radius-full);
+            overflow: hidden;
+        }
+
+        .skill-progress {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent), var(--accent-light));
+            border-radius: var(--radius-full);
+            width: 0;
+            transition: width 1.5s ease-out;
+            position: relative;
+        }
+
+        /* 进度条光效 */
+        .skill-progress::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.3),
+                transparent
+            );
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        /* 
+        ============================================
+        🎓 高级技巧 #12: 爱好标签
+        ============================================
+        */
+        .hobbies-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--space-sm);
+        }
+
+        .hobby-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-xs);
+            padding: var(--space-xs) var(--space-sm);
+            background: var(--primary-light);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-full);
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            transition: all var(--duration-fast) ease;
+            cursor: default;
+        }
+
+        .hobby-tag:hover {
+            background: var(--accent);
+            color: var(--primary-dark);
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px var(--accent-glow);
+        }
+
+        .hobby-tag .emoji {
+            font-size: 1.1rem;
+        }
+
+        /* 
+        ============================================
+        🎓 高级技巧 #13: 时间线设计
+        ============================================
+        */
+        .timeline {
+            position: relative;
+            padding-left: var(--space-xl);
+        }
+
+        /* 时间线竖线 */
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 8px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(
+                to bottom,
+                var(--accent),
+                var(--accent-light),
+                transparent
+            );
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-bottom: var(--space-lg);
+        }
+
+        .timeline-item:last-child {
+            padding-bottom: 0;
+        }
+
+        /* 时间线圆点 */
+        .timeline-dot {
+            position: absolute;
+            left: calc(-1 * var(--space-xl) + 2px);
+            top: 4px;
+            width: 14px;
+            height: 14px;
+            background: var(--accent);
+            border-radius: 50%;
+            border: 3px solid var(--primary-dark);
+            box-shadow: 0 0 10px var(--accent-glow);
+        }
+
+        .timeline-date {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--accent);
+            margin-bottom: var(--space-xs);
+        }
+
+        .timeline-title {
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .timeline-location {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .timeline-location .icon {
+            display: inline-block;
+            margin-right: 4px;
+        }
+
+        /* 
+        ============================================
+        🎓 高级技巧 #14: 联系方式卡片
+        ============================================
+        */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--space-sm);
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            padding: var(--space-sm);
+            background: var(--primary-light);
+            border-radius: var(--radius-md);
+            transition: all var(--duration-fast) ease;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .contact-item:hover {
+            background: var(--accent);
+            color: var(--primary-dark);
+            transform: translateX(8px);
+        }
+
+        .contact-item:hover .contact-icon {
+            background: var(--primary-dark);
+            color: var(--accent);
+        }
+
+        .contact-icon {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-sm);
+            font-size: 1.2rem;
+            transition: all var(--duration-fast) ease;
+        }
+
+        .contact-details {
+            flex: 1;
+        }
+
+        .contact-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .contact-item:hover .contact-label {
+            color: var(--primary-light);
+        }
+
+        .contact-value {
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .contact-item:hover .contact-value {
+            color: var(--primary-dark);
+        }
+
+        /* 
+        ============================================
+        🎓 高级技巧 #15: 页脚设计
+        ============================================
+        */
+        .footer {
+            text-align: center;
+            padding: var(--space-xl) 0;
+            color: var(--text-muted);
+            font-size: 0.875rem;
+        }
+
+        .footer-heart {
+            color: #ef4444;
+            display: inline-block;
+            animation: heartbeat 1.5s ease-in-out infinite;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        /* 
+        ============================================
+        🎓 高级技巧 #16: 浮动粒子效果
+        ============================================
+        */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: float-particle linear infinite;
+        }
+
+        @keyframes float-particle {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.3;
+            }
+            90% {
+                opacity: 0.3;
+            }
+            100% {
+                transform: translateY(-100px) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        /*
+        ============================================
+        🎓 高级技巧 #17: 侧边导航栏
+        ============================================
+        */
+        .side-nav {
+            position: fixed;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 100;
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-lg);
+            padding: var(--space-sm);
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: var(--space-xs);
+            padding: 10px 14px;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: all var(--duration-fast) ease;
+            color: var(--text-muted);
+            text-decoration: none;
+        }
+
+        .nav-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-primary);
+        }
+
+        .nav-item:hover .nav-icon {
+            transform: scale(1.1);
+        }
+
+        .nav-item.active {
+            background: rgba(245, 158, 11, 0.15);
+            color: var(--accent);
+        }
+
+        .nav-item.active .nav-icon {
+            filter: drop-shadow(0 0 6px var(--accent-glow));
+        }
+
+        .nav-item.active .nav-text {
+            color: var(--accent);
+        }
+
+        .nav-icon {
+            font-size: 1.1rem;
+            width: 24px;
+            text-align: center;
+            transition: transform var(--duration-fast) ease;
+        }
+
+        .nav-text {
+            font-size: 0.85rem;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        /*
+        ============================================
+        🎓 高级技巧 #18: 响应式设计
+        ============================================
+        */
+        @media (max-width: 768px) {
+            .main-container {
+                padding: var(--space-lg) var(--space-sm);
+            }
+
+            .glass-card {
+                padding: var(--space-md);
+            }
+
+            .hero {
+                padding: var(--space-xl) 0;
+            }
+
+            .avatar {
+                width: 120px;
+                height: 120px;
+                font-size: 50px;
+            }
+
+            .avatar-ring {
+                width: 150px;
+                height: 150px;
+            }
+
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .side-nav {
+                display: none;
+            }
+        }
+
+        /* 
+        ============================================
+        🎓 高级技巧 #18: 滚动显示动画
+        ============================================
+        */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* 
+        ============================================
+        🎓 高级技巧 #19: 自定义滚动条
+        ============================================
+        */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--primary-dark);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-light);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent);
+        }
+
+        /* 
+        ============================================
+        🎓 高级技巧 #20: 文字描边效果
+        ============================================
+        */
+        .text-outline {
+            color: transparent;
+            -webkit-text-stroke: 1px var(--accent);
+            font-family: var(--font-display);
+            font-size: 0.9rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+        }
+
+        /* 引用块样式 */
+        .quote-block {
+            position: relative;
+            padding: var(--space-md);
+            padding-left: var(--space-lg);
+            border-left: 3px solid var(--accent);
+            background: rgba(245, 158, 11, 0.05);
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+            font-style: italic;
+            color: var(--text-secondary);
+        }
+
+        .quote-block::before {
+            content: '"';
+            position: absolute;
+            left: var(--space-sm);
+            top: 0;
+            font-size: 3rem;
+            color: var(--accent);
+            opacity: 0.3;
+            font-family: var(--font-display);
+            line-height: 1;
+        }
+    </style>
+</head>
+<body>
+    <!-- 背景效果层 -->
+    <div class="background-effects">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+        <div class="gradient-orb orb-3"></div>
+    </div>
+    <div class="grid-background"></div>
+    <div class="noise-overlay"></div>
+    
+    <!-- 浮动粒子 -->
+    <div class="particles" id="particles"></div>
+
+    <!-- 侧边导航 -->
+    <nav class="side-nav">
+        <div class="nav-item active" data-target="hero">
+            <span class="nav-icon">🏠</span>
+            <span class="nav-text">首页</span>
+        </div>
+        <div class="nav-item" data-target="about">
+            <span class="nav-icon">👋</span>
+            <span class="nav-text">关于我</span>
+        </div>
+        <div class="nav-item" data-target="skills">
+            <span class="nav-icon">💻</span>
+            <span class="nav-text">技能</span>
+        </div>
+        <div class="nav-item" data-target="hobbies">
+            <span class="nav-icon">🎯</span>
+            <span class="nav-text">爱好</span>
+        </div>
+        <div class="nav-item" data-target="education">
+            <span class="nav-icon">🎓</span>
+            <span class="nav-text">教育</span>
+        </div>
+        <div class="nav-item" data-target="contact">
+            <span class="nav-icon">📬</span>
+            <span class="nav-text">联系</span>
+        </div>
+    </nav>
+
+    <!-- 主内容 -->
+    <div class="main-container">
+        
+        <!-- Hero 区域 -->
+        <section class="hero" id="hero">
+            <div class="avatar-container animate-in delay-1">
+                <div class="avatar-ring"></div>
+                <div class="avatar-ring"></div>
+                <div class="avatar">🐶</div>
+            </div>
+            
+            <h1 class="hero-title animate-in delay-2">
+                <span id="typed-name"></span><span class="cursor"></span>
+            </h1>
+            
+            <p class="hero-subtitle animate-in delay-3">
+                探索 AI 辅助编程的世界 ✨
+            </p>
+            
+            <div class="status-badge animate-in delay-4">
+                <span class="status-dot"></span>
+                <span>正在学习中...</span>
+            </div>
+        </section>
+
+        <!-- 关于我 -->
+        <div class="glass-card reveal" id="about">
+            <div class="card-header">
+                <div class="card-icon">👋</div>
+                <h2 class="card-title">关于我</h2>
+            </div>
+            
+            <p class="text-outline" style="margin-bottom: var(--space-sm);">About Me</p>
+            
+            <div class="quote-block">
+                我是一个对编程充满好奇的新手，正在探索 AI 辅助编程的世界。
+                相信技术能够改变生活，每一行代码都是一次小小的探险。
+            </div>
+        </div>
+
+        <!-- 技能 -->
+        <div class="glass-card reveal" id="skills">
+            <div class="card-header">
+                <div class="card-icon">💻</div>
+                <h2 class="card-title">技能成长</h2>
+            </div>
+            
+            <p class="text-outline" style="margin-bottom: var(--space-md);">Skills</p>
+            
+            <div class="skills-grid">
+                <div class="skill-item">
+                    <div class="skill-header">
+                        <span class="skill-name">HTML / CSS</span>
+                        <span class="skill-level">60%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-progress="60"></div>
+                    </div>
+                </div>
+                
+                <div class="skill-item">
+                    <div class="skill-header">
+                        <span class="skill-name">JavaScript</span>
+                        <span class="skill-level">40%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-progress="40"></div>
+                    </div>
+                </div>
+                
+                <div class="skill-item">
+                    <div class="skill-header">
+                        <span class="skill-name">Vibe Coding</span>
+                        <span class="skill-level">80%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-progress="80"></div>
+                    </div>
+                </div>
+                
+                <div class="skill-item">
+                    <div class="skill-header">
+                        <span class="skill-name">AI 协作能力</span>
+                        <span class="skill-level">90%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-progress="90"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 爱好 -->
+        <div class="glass-card reveal" id="hobbies">
+            <div class="card-header">
+                <div class="card-icon">🎯</div>
+                <h2 class="card-title">我的爱好</h2>
+            </div>
+            
+            <p class="text-outline" style="margin-bottom: var(--space-md);">Hobbies</p>
+            
+            <div class="hobbies-container">
+                <span class="hobby-tag">
+                    <span class="emoji">🏀</span>
+                    <span>打篮球</span>
+                </span>
+                <span class="hobby-tag">
+                    <span class="emoji">🎵</span>
+                    <span>听音乐</span>
+                </span>
+                <span class="hobby-tag">
+                    <span class="emoji">💻</span>
+                    <span>Vibe Coding</span>
+                </span>
+                <span class="hobby-tag">
+                    <span class="emoji">📚</span>
+                    <span>阅读</span>
+                </span>
+                <span class="hobby-tag">
+                    <span class="emoji">🎮</span>
+                    <span>游戏</span>
+                </span>
+                <span class="hobby-tag">
+                    <span class="emoji">☕</span>
+                    <span>咖啡</span>
+                </span>
+            </div>
+        </div>
+
+        <!-- 教育经历 -->
+        <div class="glass-card reveal" id="education">
+            <div class="card-header">
+                <div class="card-icon">🎓</div>
+                <h2 class="card-title">教育历程</h2>
+            </div>
+            
+            <p class="text-outline" style="margin-bottom: var(--space-md);">Education</p>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-date">2024 - 2025</div>
+                    <div class="timeline-title">硕士研究生 · 布朗大学</div>
+                    <div class="timeline-location">
+                        <span class="icon">📍</span>美国罗德岛州普罗维登斯
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-date">2020 - 2023</div>
+                    <div class="timeline-title">本科 · 华威大学</div>
+                    <div class="timeline-location">
+                        <span class="icon">📍</span>英国考文垂
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-date">2019 - 2020</div>
+                    <div class="timeline-title">预科 · 华威大学</div>
+                    <div class="timeline-location">
+                        <span class="icon">📍</span>英国考文垂
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 联系方式 -->
+        <div class="glass-card reveal" id="contact">
+            <div class="card-header">
+                <div class="card-icon">📬</div>
+                <h2 class="card-title">联系我</h2>
+            </div>
+            
+            <p class="text-outline" style="margin-bottom: var(--space-md);">Contact</p>
+            
+            <div class="contact-grid">
+                <a href="mailto:ryan@example.com" class="contact-item">
+                    <div class="contact-icon">📧</div>
+                    <div class="contact-details">
+                        <div class="contact-label">邮箱</div>
+                        <div class="contact-value">ryan@example.com</div>
+                    </div>
+                </a>
+                
+                <a href="https://github.com/ryan" target="_blank" class="contact-item">
+                    <div class="contact-icon">💻</div>
+                    <div class="contact-details">
+                        <div class="contact-label">GitHub</div>
+                        <div class="contact-value">github.com/ryan</div>
+                    </div>
+                </a>
+                
+                <div class="contact-item">
+                    <div class="contact-icon">💬</div>
+                    <div class="contact-details">
+                        <div class="contact-label">微信</div>
+                        <div class="contact-value">Ryan_WeChat</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 页脚 -->
+        <footer class="footer reveal">
+            <p>
+                Made with <span class="footer-heart">❤️</span> by Ryan
+            </p>
+            <p style="margin-top: var(--space-xs); opacity: 0.6;">
+                © 2024 - 用代码构建梦想
+            </p>
+        </footer>
+    </div>
+
+    <!-- 
+    ============================================
+    🎓 JavaScript 部分
+    ============================================
+    -->
+    <script>
+        /* 
+        ============================================
+        🎓 JS技巧 #1: 打字机效果
+        ============================================
+        */
+        const name = "Ryan";
+        const typedElement = document.getElementById("typed-name");
+        let charIndex = 0;
+        let isDeleting = false;
+        
+        function typeWriter() {
+            const currentText = name.substring(0, charIndex);
+            typedElement.textContent = currentText;
+            
+            if (!isDeleting && charIndex < name.length) {
+                // 正在打字
+                charIndex++;
+                setTimeout(typeWriter, 200);
+            } else if (!isDeleting && charIndex === name.length) {
+                // 打完了，等待后开始删除
+                setTimeout(() => {
+                    isDeleting = true;
+                    typeWriter();
+                }, 2000);
+            } else if (isDeleting && charIndex > 0) {
+                // 正在删除
+                charIndex--;
+                setTimeout(typeWriter, 100);
+            } else {
+                // 删除完了，重新开始
+                isDeleting = false;
+                setTimeout(typeWriter, 500);
+            }
+        }
+        
+        // 启动打字效果
+        setTimeout(typeWriter, 800);
+
+        /* 
+        ============================================
+        🎓 JS技巧 #2: 滚动显示动画
+        ============================================
+        使用 Intersection Observer API 检测元素是否进入视口
+        这比监听 scroll 事件性能更好
+        */
+        const revealElements = document.querySelectorAll('.reveal');
+        
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, {
+            threshold: 0.1,  // 当元素 10% 可见时触发
+            rootMargin: '0px 0px -50px 0px'  // 底部偏移，提前触发
+        });
+        
+        revealElements.forEach(el => revealObserver.observe(el));
+
+        /* 
+        ============================================
+        🎓 JS技巧 #3: 技能进度条动画
+        ============================================
+        页面加载后延迟启动，让用户能看到动画效果
+        */
+        function animateSkillBars() {
+            const skillBars = document.querySelectorAll('.skill-progress');
+            skillBars.forEach((bar, index) => {
+                const progress = bar.getAttribute('data-progress');
+                // 添加延迟，让每个进度条依次动画
+                setTimeout(() => {
+                    bar.style.width = progress + '%';
+                }, index * 200);
+            });
+        }
+        
+        // 页面加载 1 秒后启动进度条动画
+        setTimeout(animateSkillBars, 1000);
+
+        /* 
+        ============================================
+        🎓 JS技巧 #4: 动态创建浮动粒子
+        ============================================
+        */
+        function createParticles() {
+            const container = document.getElementById('particles');
+            const particleCount = 30;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                
+                // 随机位置
+                particle.style.left = Math.random() * 100 + '%';
+                
+                // 随机大小
+                const size = 2 + Math.random() * 4;
+                particle.style.width = size + 'px';
+                particle.style.height = size + 'px';
+                
+                // 随机动画时长
+                particle.style.animationDuration = (15 + Math.random() * 20) + 's';
+                
+                // 随机延迟
+                particle.style.animationDelay = Math.random() * 20 + 's';
+                
+                container.appendChild(particle);
+            }
+        }
+        
+        createParticles();
+
+        /* 
+        ============================================
+        🎓 JS技巧 #5: 鼠标跟随效果（可选）
+        ============================================
+        当鼠标移动时，背景光晕会微微跟随
+        */
+        document.addEventListener('mousemove', (e) => {
+            const orbs = document.querySelectorAll('.gradient-orb');
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            
+            orbs.forEach((orb, index) => {
+                // 每个光晕移动的程度不同，创造深度感
+                const factor = (index + 1) * 20;
+                orb.style.transform = `translate(${x * factor}px, ${y * factor}px)`;
+            });
+        });
+
+        /*
+        ============================================
+        🎓 JS技巧 #6: 侧边导航功能
+        ============================================
+        点击导航项平滑滚动到目标模块，滚动时自动高亮当前模块
+        */
+        const navItems = document.querySelectorAll('.nav-item');
+        const sections = document.querySelectorAll('[id]');
+
+        // 点击导航项滚动到目标
+        navItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const targetId = item.getAttribute('data-target');
+                const targetElement = document.getElementById(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // 滚动时更新导航高亮
+        const navObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const id = entry.target.getAttribute('id');
+                    navItems.forEach(item => {
+                        item.classList.remove('active');
+                        if (item.getAttribute('data-target') === id) {
+                            item.classList.add('active');
+                        }
+                    });
+                }
+            });
+        }, {
+            threshold: 0.3,
+            rootMargin: '-10% 0px -60% 0px'
+        });
+
+        sections.forEach(section => {
+            if (section.id) {
+                navObserver.observe(section);
+            }
+        });
+
+        /*
+        ============================================
+        🎓 JS技巧 #7: 控制台彩蛋
+        ============================================
+        在浏览器控制台留下有趣的消息
+        */
+        console.log('%c🐶 欢迎来到 Ryan 的个人主页！',
+            'color: #f59e0b; font-size: 20px; font-weight: bold;');
+        console.log('%c想学习更多 Vibe Coding 技巧？随时联系我！',
+            'color: #94a3b8; font-size: 14px;');
+    </script>
+</body>
+</html>
